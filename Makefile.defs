@@ -1,0 +1,45 @@
+## Variable that points to SystemC installation path
+# You NEED to set this variable to your own SystemC intallation path
+SYSTEMC = /usr/local/systemC/systemc-2.3.1a
+#SYSTEMC = /usr/local/systemC/systemc-2.3.0
+#SYSTEMC = /usr/local/systemC/systemc-2.2.0
+
+## Variable indicating the targeted architecture. MODIFY to suit your requirements
+TARGET_ARCH = linux64
+#TARGET_ARCH = gccsparcOS5
+#TARGET_ARCH = cygwin
+#TARGET_ARCH = gcchpux11
+
+INCDIR = -I. -I.. -I$(SYSTEMC)/include
+LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH)
+
+LIBS   =  -lsystemc -lm $(EXTRA_LIBS)
+
+
+EXE    = $(MODULE)
+
+.SUFFIXES: .cc .cpp .o .x
+
+
+$(EXE): $(OBJS) $(SYSTEMC)/lib-$(TARGET_ARCH)/libsystemc.a 
+	$(CC) $(DEBUG) $(CFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) $(LIBS) 2>&1 | c++filt
+
+
+all: $(EXE)	
+	
+.cpp.o:
+	$(CC) $(DEBUG) $(CFLAGS) $(INCDIR) -c $<
+
+.cc.o:
+	$(CC) $(DEBUG) $(CFLAGS) $(INCDIR) -c $<
+
+clean::
+	rm -f $(OBJS) *~ $(EXE) core
+
+ultraclean: clean
+	rm -f Makefile.deps
+
+Makefile.deps:
+#	$(CC) $(DEBUG) $(CFLAGS) $(INCDIR) -M $(SRCS) >> Makefile.deps
+
+#include Makefile.deps
