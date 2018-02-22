@@ -3,18 +3,26 @@
 Wavelet::Wavelet(sc_module_name name):sc_module(name)
 {
 	SC_METHOD(delay_even);
-        sensitive << clk.pos();
+        sensitive << clk.pos() << reset;
     SC_METHOD(delay_odd);
-    	sensitive << clk.pos();
+    	sensitive << clk.pos() << reset;
     SC_METHOD(compute_d)
-    	sensitive << evenm2 << even << evenp2 << evenp4 << odd;
+    	sensitive << evenm2 << even << evenp2 << evenp4 << odd << reset;
     SC_METHOD(compute_c)
-    	sensitive << even << dm1 << d_out << first_c;
+    	sensitive << even << dm1 << d_out << first_c << reset;
 }
 
 void Wavelet::delay_even()
 {
-	if(load_even.read() == true)
+	if(reset.read() == false)
+	{
+		dm1.write(0);
+		evenm2.write(0);
+		even.write(0);
+		evenp2.write(0);
+		evenp4.write(0);
+	}
+	else if(load_even.read() == true)
 	{
 		// Save old D value at this point
 		dm1.write(d_out.read());
@@ -29,7 +37,13 @@ void Wavelet::delay_even()
 
 void Wavelet::delay_odd()
 {
-	if(load_odd.read() == true)
+	if(reset.read() == false)
+	{
+		odd.write(0);
+		oddp2.write(0);
+		oddp4.write(0);
+	}
+	else if(load_odd.read() == true)
 	{
 		odd.write(oddp2.read());
 		oddp2.write(oddp4.read());
@@ -39,22 +53,36 @@ void Wavelet::delay_odd()
 
 void Wavelet::compute_d()
 {
-	d_out.write(
-		odd.read() 
-		- (9*(even.read() + evenp2.read()) 
-			- (evenm2.read() + evenp4.read())) / 16
-		-128 
-	);
+	if(reset.read() == false)
+	{
+		d_out.write(0);
+	}
+	else
+	{
+		d_out.write(
+			odd.read() 
+			- (9*(even.read() + evenp2.read()) 
+				- (evenm2.read() + evenp4.read())) / 16
+			-128 
+		);
+	}
 }
 
 void Wavelet::compute_c()
 {
-	if(first_c.read() == true)
+	if(reset.read() == false)
 	{
-		c_out.write(even.read() + d_out.read() / 2);
+		c_out.write(0);
 	}
 	else
 	{
-		c_out.write(even.read() + (d_out.read() + dm1.read()) / 4);
+		if(first_c.read() == true)
+		{
+			c_out.write(even.read() + d_out.read() / 2);
+		}
+		else
+		{
+			c_out.write(even.read() + (d_out.read() + dm1.read()) / 4);
+		}
 	}
 }
