@@ -23,7 +23,7 @@ public:
 	sc_out<bool> load_odd;
 	sc_out<bool> first_c;
 
-	Sequencer(sc_module_name name);
+	Sequencer(sc_module_name name, int nbRows, int nbCols);
 
 	void update_state();
 	void compute_outputs();
@@ -32,8 +32,11 @@ public:
 
 private:
 	sc_signal<int> globalState;
-	sc_signal<int> currentLine;
+	sc_signal<int> currentRow;
 	sc_signal<int> currentCol;
+
+	int nbRows;
+	int nbCols;
 };
 
 #endif
