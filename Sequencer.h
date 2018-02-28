@@ -19,8 +19,7 @@ public:
 	sc_out<bool> mem_out_write;
 
 	// Transform block control signals
-	sc_out<bool> load_even;
-	sc_out<bool> load_odd;
+	sc_out<bool> even;
 	sc_out<bool> first_c;
 
 	Sequencer(sc_module_name name, int nbRows, int nbCols);

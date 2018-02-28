@@ -57,6 +57,8 @@ void Sequencer::compute_outputs()
 		mem_in_addr.write(0);
 		mem_out_addr.write(0);
 		mem_out_write.write(false);
+		first_c.write(false);
+		even.write(true);
 	}
 	else // Computing
 	{
@@ -70,18 +72,54 @@ void Sequencer::compute_outputs()
 			actualCol = nbCols - (actualCol - nbCols);
 
 		// Input address to access
-		int addrIn = actualCol + nbRows * currentRow.read();
+		int addrIn = actualCol + nbCols * currentRow.read();
 		mem_in_addr.write(addrIn);
 
-		if(actualCol % 2 == 0)
-		{
-			load_even.write(true);
-			load_odd.write(false);
-		}
+		bool evenCol = actualCol % 2 == 0;
+		even.write(evenCol);
+
+		// Use C0 or Cj formula for C
+		if(currentCol )
+			first_c.write(true);
 		else
-		{
-			load_even.write(false);
-			load_odd.write(true);
+			first_c.write(false);
+
+		// Output address to access
+		// Inputing even column, the transform blocks outputs D value
+		if(evenCol)
+		{	
+			// The first D value is obtained when the even input pixel index is >= 6
+			if(currentCol.read() >= 6)
+			{
+				mem_out_addr.write(
+					nbCols * currentRow.read() // Position on right row
+					+ (currentCol.read() - 6) / 2 // Column position
+				);
+				mem_out_write.write(true);
+			}
+			else
+			{
+				mem_out_addr.write(0);
+				mem_out_write.write(false);
+			}
 		}
+		else // Inputing odd column, the transform block outputs C value
+		{
+			if(currentCol.read() >= 7)
+			{
+				mem_out_addr.write(
+					nbCols * currentRow.read()  // Position on right row
+					+ nbCols / 2 // Offset by half the image
+					+ (currentCol.read() - 7) / 2 // Column position
+				);
+				mem_out_write.write(true);
+			}
+			else
+			{
+				mem_out_addr.write(0);
+				mem_out_write.write(false);
+			}
+		}
+
 	}
 }
