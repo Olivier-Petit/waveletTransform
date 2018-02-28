@@ -3,17 +3,11 @@
 
 #include <systemc.h>
 #include <stdio.h>
-//#include "defs.h"
 
 
-SC_MODULE(Memory) {
-   ////////////////////////////////////////
-   // definition des variables locales
-   ///////////////////////////////////////
-   
-   ////////////////////////////////////////
-   // definition des ports d'entrée sortie
-   ///////////////////////////////////////
+class Memory : public sc_module
+{
+public:
    sc_in<bool> clk;
    sc_in<bool> reset;
    
@@ -24,19 +18,22 @@ SC_MODULE(Memory) {
    
    sc_out<unsigned char> data_bo, data_vo, data_ro;
    
-   ///////////////////////////////////////////////
-   // definition des fonctions locales (processus)
-   ///////////////////////////////////////////////
    void pict_load();
    void pict_save();
    void mem_read();
    void mem_write();
       
-   ///////////////////////////////////////////////
-   // constructeur C++
-   ///////////////////////////////////////////////
    Memory(sc_module_name name);
    SC_HAS_PROCESS(Memory);
    ~Memory();
+
+private:
+   unsigned char *palb, *palv, *palr; // pointeurs vers les palettes couleurs
+   unsigned char *imgb, *imgv, *imgr; // pointeurs vers les donnees image
+   int *infimg;                       // pointeur sur les informations d'image
+   int lgpal;                         // longueur de la palette
+   int nbpix;                         // nombre de pixels dans l'image
+   int nlig;                          // nombre de lignes de l'image
+   int ncol;                          // nombre de colonnes de l'image
 };
-#endif //include guard
+#endif

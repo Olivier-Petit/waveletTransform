@@ -8,7 +8,7 @@ CFLAGS = $(OPT) $(OTHER) -Wno-deprecated
 # CFLAGS = $(DEBUG) $(OTHER)
 
 MODULE = run
-SRCS = Wavelet.cpp Sequencer.cpp
+SRCS = Wavelet.cpp Sequencer.cpp Memory.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 include ./Makefile.defs

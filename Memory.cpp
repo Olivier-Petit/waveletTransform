@@ -1,24 +1,11 @@
 #include "Memory.h"
 
-/* Variables globales
----------------------------------------POUR LES REUTILISER DANS D'AUTRES FICHIERS : extern
----------------------------------------exemple pour recuperer nlig et ncol dans sequenceur.cpp : 
----------------------------------------extern int nlig;
----------------------------------------extern int ncol;
- */
-unsigned char *palb, *palv, *palr; // pointeurs vers les palettes couleurs
-unsigned char *imgb, *imgv, *imgr; // pointeurs vers les donnees image
-int *infimg;                       // pointeur sur les informations d'image
-int lgpal;                         // longueur de la palette
-int nbpix;                         // nombre de pixels dans l'image
-int nlig;                          // nombre de lignes de l'image
-int ncol;                          // nombre de colonnes de l'image
-bool horiz;                        // traitement horizontal ou vertical
 
 
 /* Constructeur du module
  */
-Memory::Memory(sc_module_name name):sc_module(name) {
+Memory::Memory(sc_module_name name) : sc_module(name)
+{
    palb = NULL;            // initialisation des pointeurs donnees image
    palv = NULL;
    palr = NULL;
@@ -26,10 +13,6 @@ Memory::Memory(sc_module_name name):sc_module(name) {
    imgv = NULL;
    imgr = NULL;
    infimg = new int[16]; // initialisation du pointeur info image
-
-  nbpix = 0;          // nombre de pixels dans l'image
-  nlig = 0;           // nombre de lignes de l'image
-  ncol = 0;           // nombre de colonnes de l'image
 
 //-------------------------------------LISTES DE SENSIBILITE A PERSONNALISER 
     SC_METHOD(pict_load);
