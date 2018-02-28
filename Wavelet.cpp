@@ -12,7 +12,7 @@ Wavelet::Wavelet(sc_module_name name):sc_module(name)
     	sensitive << even << dm1 << d_int << first_c << reset;
 
     SC_METHOD(output_select);
-    	sensitive << c_int << d_int << even << reset;
+    	sensitive << c_int << d_int << c_saved << load_even << reset;
 }
 
 void Wavelet::delay()
@@ -63,12 +63,18 @@ void Wavelet::compute_d()
 	}
 	else
 	{
-		d_int.write(
+		int newd = 
 			odd.read() 
 			- (9*(even.read() + evenp2.read()) 
 				- (evenm2.read() + evenp4.read())) / 16
-			-128 
-		);
+			+ 128;
+
+		if(newd > 255)
+			d_int.write(255);
+		else if(newd < 0)
+			d_int.write(0);
+		else
+			d_int.write(newd);
 	}
 }
 
@@ -80,14 +86,18 @@ void Wavelet::compute_c()
 	}
 	else
 	{
+		int newc = 0;
 		if(first_c.read() == true)
-		{
-			c_int.write(even.read() + d_int.read() / 2);
-		}
+			newc = even.read() + d_int.read() / 2 - 64;
 		else
-		{
-			c_int.write(even.read() + (d_int.read() + dm1.read()) / 4);
-		}
+			newc = even.read() + (d_int.read() + dm1.read()) / 4 - 64;
+
+		if(newc > 255)
+			c_int.write(255);
+		else if(newc < 0)
+			c_int.write(0);
+		else
+			c_int.write(newc);
 	}
 }
 
@@ -99,7 +109,7 @@ void Wavelet::output_select()
 	}
 	else
 	{
-		if(even.read() == true)
+		if(load_even.read() == true)
 			data_out.write(d_int.read());
 		else
 			data_out.write(c_saved.read());

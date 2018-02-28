@@ -29,7 +29,6 @@ public:
 
    SC_HAS_PROCESS(Wavelet);
 
-private:
    sc_signal<unsigned char> evenp4, evenp2, even, evenm2;
    sc_signal<unsigned char> oddp4, oddp2, odd;
    sc_signal<unsigned char> dm1;

@@ -28,6 +28,14 @@ int sc_main(int argc, char *argv[])
 	sc_trace(tf, reset, "reset");
 	sc_trace(tf, start, "start");
 	sc_trace(tf, busy, "busy");
+	sc_trace(tf, wp.even, "even");
+	sc_trace(tf, wp.first_c, "first_c");
+	sc_trace(tf, wp.mem_out_write, "mem_out_write");
+	sc_trace(tf, wp.mem_in_addr, "mem_in_addr");
+	sc_trace(tf, wp.mem_out_addr, "mem_out_addr");
+	sc_trace(tf, wp.waveletR.data_out, "r_out");
+	sc_trace(tf, wp.waveletR.c_int, "r_c");
+	sc_trace(tf, wp.waveletR.d_int, "r_d");
 
 	cout << "Sim start" << endl;
 	sc_start(540 * 512 * 100, SC_NS);

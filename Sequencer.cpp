@@ -78,7 +78,7 @@ void Sequencer::compute_outputs()
 		even.write(evenCol);
 
 		// Use C0 or Cj formula for C
-		if(currentCol )
+		if(currentCol == 5)
 			first_c.write(true);
 		else
 			first_c.write(false);
@@ -93,6 +93,7 @@ void Sequencer::compute_outputs()
 				mem_out_addr.write(
 					nbCols * nbRows // Output memory is second half of memory
 					+ nbCols * currentRow.read() // Position on right row
+					+ nbCols / 2 // Offset by half the image
 					+ (currentCol.read() - 6) / 2 // Column position
 				);
 				mem_out_write.write(true);
@@ -110,7 +111,6 @@ void Sequencer::compute_outputs()
 				mem_out_addr.write(
 					nbCols * nbRows // Output memory is second half of memory
 					+ nbCols * currentRow.read()  // Position on right row
-					+ nbCols / 2 // Offset by half the image
 					+ (currentCol.read() - 7) / 2 // Column position
 				);
 				mem_out_write.write(true);
