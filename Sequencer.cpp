@@ -35,7 +35,7 @@ void Sequencer::update_state()
 		currentCol.write(currentCol.read() + 1);
 
 		// Row over, switch to next one
-		if(currentCol.read() == nbCols + 2)
+		if(currentCol.read() == nbCols + 5)
 		{
 			currentRow.write(currentRow.read() + 1);
 			currentCol.write(-2);
