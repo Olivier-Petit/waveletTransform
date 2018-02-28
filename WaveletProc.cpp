@@ -16,6 +16,8 @@ WaveletProc::WaveletProc(sc_module_name name):
 	sequencer.mem_in_addr(mem_in_addr);
 	sequencer.mem_out_addr(mem_out_addr);
 	sequencer.mem_out_write(mem_out_write);
+	sequencer.even(even);
+	sequencer.first_c(first_c);
 
 	// Memory
 	memory.clk(clk);

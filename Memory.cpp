@@ -1,7 +1,6 @@
 #include "Memory.h"
 
 
-
 /* Constructeur du module
  */
 Memory::Memory(sc_module_name name) : sc_module(name)
@@ -93,8 +92,9 @@ void putshort(FILE *fil, unsigned short val) {
  */
 void Memory::pict_save() {   
    FILE *file2;
-   
-   if ( !reset.read() ) {
+
+   if (reset.read())
+   {
          cout << "Creation fichier ecriture\n";
          file2 = fopen("IMG2.bmp", "wb");
          if ( !file2 )  cout << "Erreur d'ouverture fichier ecriture\n";

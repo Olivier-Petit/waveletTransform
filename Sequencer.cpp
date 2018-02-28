@@ -20,7 +20,6 @@ void Sequencer::update_state()
 	if(reset.read() == false)
 	{
 		globalState.write(SEQ_STATE_READY);
-		busy.write(false);
 	}
 	// Start transform
 	else if(globalState.read() == SEQ_STATE_READY && start.read() == true)
