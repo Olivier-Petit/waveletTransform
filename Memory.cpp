@@ -18,10 +18,10 @@ Memory::Memory(sc_module_name name) : sc_module(name)
     SC_METHOD(pict_load);
         sensitive << reset.pos();
     SC_METHOD(pict_save);  
-        sensitive << img_valid.pos();
+        sensitive << img_valid.neg();
         dont_initialize();
-    SC_METHOD(mem_read);  
-        sensitive << clk.neg();
+    SC_METHOD(mem_read); // Asynchronous memory reads
+        sensitive << admemr;
     SC_METHOD(mem_write);
         sensitive << clk.pos();
 }
@@ -60,10 +60,13 @@ void Memory::mem_read() {
 /* ecriture synchrone dans la memoire
  */
 void Memory::mem_write() { // l'adresse memoire va de 0 a 2*nbpix-1
-   if ( admemw.read()<2*nbpix ) {
-      imgb[admemw] = data_bi.read();
-      imgv[admemw] = data_vi.read();
-      imgr[admemw] = data_ri.read();
+   if(write_enable.read())
+   {
+      if ( admemw.read()<2*nbpix ) {
+         imgb[admemw] = data_bi.read();
+         imgv[admemw] = data_vi.read();
+         imgr[admemw] = data_ri.read();
+      }
    }
 }
 
@@ -159,7 +162,7 @@ void Memory::pict_load() {
    FILE *file;         // pointeur sur le fichier ouvert
    
    // ouverture du fichier
-   file = fopen("IMG.bmp", "rb");                      
+   file = fopen("lena.bmp", "rb");                      
    if ( !file )  cout << "Erreur d'ouverture\n";
    else          cout << "Fichier lecture ouvert\n";
    

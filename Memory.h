@@ -14,8 +14,9 @@ public:
    sc_in<bool> img_valid;
    sc_in<int>  admemr;
    sc_in<int>  admemw;
-   sc_in<unsigned char> data_bi, data_vi, data_ri;
+   sc_in<bool> write_enable;
    
+   sc_in<unsigned char> data_bi, data_vi, data_ri;
    sc_out<unsigned char> data_bo, data_vo, data_ro;
    
    void pict_load();

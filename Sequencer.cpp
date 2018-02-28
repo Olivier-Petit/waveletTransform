@@ -92,7 +92,8 @@ void Sequencer::compute_outputs()
 			if(currentCol.read() >= 6)
 			{
 				mem_out_addr.write(
-					nbCols * currentRow.read() // Position on right row
+					nbCols * nbRows // Output memory is second half of memory
+					+ nbCols * currentRow.read() // Position on right row
 					+ (currentCol.read() - 6) / 2 // Column position
 				);
 				mem_out_write.write(true);
@@ -108,7 +109,8 @@ void Sequencer::compute_outputs()
 			if(currentCol.read() >= 7)
 			{
 				mem_out_addr.write(
-					nbCols * currentRow.read()  // Position on right row
+					nbCols * nbRows // Output memory is second half of memory
+					+ nbCols * currentRow.read()  // Position on right row
 					+ nbCols / 2 // Offset by half the image
 					+ (currentCol.read() - 7) / 2 // Column position
 				);
