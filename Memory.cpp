@@ -48,7 +48,7 @@ Memory::~Memory() {
 /* lecture synchrone de la memoire
  */
 void Memory::mem_read() {
-   if ( admemr.read()<2*nbpix ) { // l'adresse memoire va de 0 a 2*nbpix-1
+   if ( admemr.read()<3*nbpix ) { // l'adresse memoire va de 0 a 2*nbpix-1
       data_bo.write(imgb[admemr]);
       data_vo.write(imgv[admemr]);
       data_ro.write(imgr[admemr]);
@@ -61,7 +61,7 @@ void Memory::mem_read() {
 void Memory::mem_write() { // l'adresse memoire va de 0 a 2*nbpix-1
    if(write_enable.read())
    {
-      if ( admemw.read()<2*nbpix ) {
+      if ( admemw.read()<3*nbpix ) {
          imgb[admemw] = data_bi.read();
          imgv[admemw] = data_vi.read();
          imgr[admemw] = data_ri.read();
@@ -117,9 +117,9 @@ void Memory::pict_save() {
          putlong(file2,infimg[14]);   // nb couleurs importantes
          
          for (int i=0;i<nbpix;i++) { // ecriture contenu pixels
-            fputc(imgb[i+nbpix],file2);
-            fputc(imgv[i+nbpix],file2);
-            fputc(imgr[i+nbpix],file2);
+            fputc(imgb[i+2*nbpix],file2);
+            fputc(imgv[i+2*nbpix],file2);
+            fputc(imgr[i+2*nbpix],file2);
          }
          
          fclose(file2);
@@ -265,9 +265,9 @@ void Memory::pict_load() {
    if (imgb!=NULL)  delete [] imgb;
    if (imgv!=NULL)  delete [] imgv;
    if (imgr!=NULL)  delete [] imgr;
-   imgb = new unsigned char [2*nbpix];
-   imgv = new unsigned char [2*nbpix];
-   imgr = new unsigned char [2*nbpix];
+   imgb = new unsigned char [3*nbpix];
+   imgv = new unsigned char [3*nbpix];
+   imgr = new unsigned char [3*nbpix];
    
    // remplissage des tableaux image
    while (!feof(file) && (lng<nbpix)) {  // boucle sur chaque pixel
