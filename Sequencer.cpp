@@ -141,7 +141,7 @@ void Sequencer::compute_outputs()
 						2 * nbCols * nbRows // Output memory is last third of memory
 						+ currentCol.read() // Postion on right column
 						+ (currentRow.read() - 6) * nbCols / 2 // Row position
-					);
+					);	
 				}
 				mem_out_write.write(true);
 			}
@@ -168,10 +168,11 @@ void Sequencer::compute_outputs()
 					mem_out_addr.write(
 						2 * nbCols * nbRows // Output memory is last third of memory
 						+ currentCol.read() // Position on right column
-						+ nbCols * nbRows / 2 // Offset by half the image
+						+ nbCols * nbRows / 2 // Offset by half the image (BMP starts at bottom line)
 						+ (currentRow.read() - 7) * nbCols / 2 // Row position
 					);
 				}
+
 				mem_out_write.write(true);
 			}
 			else
