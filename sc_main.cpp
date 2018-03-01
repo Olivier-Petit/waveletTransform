@@ -38,7 +38,7 @@ int sc_main(int argc, char *argv[])
 	sc_trace(tf, wp.waveletR.d_int, "r_d");
 
 	cout << "Sim start" << endl;
-	sc_start(540 * 512 * 100, SC_NS);
+	sc_start(540 * 512 * 200, SC_NS);
 	sc_close_vcd_trace_file(tf);
 	cout << "Sim end" << endl;
 
