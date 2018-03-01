@@ -44,6 +44,8 @@ void Sequencer::update_state()
 			if(currentRow.read() == nbRows - 1)
 			{
 				globalState.write(SEQ_STATE_VERTICAL_TRANSFORM);
+				currentRow.write(-2);
+				currentCol.write(0);
 			}
 		}
 	}
@@ -81,7 +83,7 @@ void Sequencer::compute_outputs()
 	{
 		busy.write(true);
 
-		// Horizontal transsform
+		// Horizontal transform
 		sc_signal<int>* primDim = &currentCol;
 		int nbPrimDim = nbCols;
 		
@@ -100,7 +102,7 @@ void Sequencer::compute_outputs()
 			actualPrimDim = nbPrimDim - (actualPrimDim - nbPrimDim);
 
 		// Input address to access
-		int addrIn = actualPrimDim + nbCols * currentRow.read();
+		int addrIn = actualPrimDim + nbCols * currentRow.read(); // HORIZ
 		
 		if(globalState.read() == SEQ_STATE_VERTICAL_TRANSFORM)
 			addrIn = currentCol.read() + nbCols * actualPrimDim + nbRows * nbCols;
@@ -112,7 +114,7 @@ void Sequencer::compute_outputs()
 		even.write(evenPrimDim);
 
 		// Use C0 or Cj formula for C
-		if(currentCol.read() == 5)
+		if(primDim->read() == 6)
 			first_c.write(true);
 		else
 			first_c.write(false);
@@ -166,7 +168,7 @@ void Sequencer::compute_outputs()
 					mem_out_addr.write(
 						2 * nbCols * nbRows // Output memory is last third of memory
 						+ currentCol.read() // Position on right column
-						+ nbCols* nbRows / 2 // Offset by half the image
+						+ nbCols * nbRows / 2 // Offset by half the image
 						+ (currentRow.read() - 7) * nbCols / 2 // Row position
 					);
 				}
