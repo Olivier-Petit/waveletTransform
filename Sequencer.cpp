@@ -40,7 +40,7 @@ void Sequencer::update_state()
 			currentRow.write(currentRow.read() + 1);
 			currentCol.write(-2);
 			
-			// Image over
+			// Image over, go to vertical transform
 			if(currentRow.read() == nbRows - 1)
 			{
 				globalState.write(SEQ_STATE_VERTICAL_TRANSFORM);
@@ -98,8 +98,8 @@ void Sequencer::compute_outputs()
 		int actualPrimDim = primDim->read();
 		if(actualPrimDim < 0)
 			actualPrimDim = -actualPrimDim;
-		else if(actualPrimDim > nbPrimDim)
-			actualPrimDim = nbPrimDim - (actualPrimDim - nbPrimDim);
+		else if(actualPrimDim >= nbPrimDim)
+			actualPrimDim = nbPrimDim - (actualPrimDim - nbPrimDim) - 2;
 
 		// Input address to access
 		int addrIn = actualPrimDim + nbCols * currentRow.read(); // HORIZ
