@@ -10,12 +10,15 @@ int sc_main(int argc, char *argv[])
 	sc_signal<bool> reset;
 	sc_signal<bool> start;
 	sc_signal<bool> busy;
+	sc_signal<int> iterations;
+	iterations.write(1);
 
 	WaveletProc wp("Wavelet");
 
 	wp.clk(clock);
 	wp.reset(reset);
 	wp.start(start);
+	wp.iterations(iterations);
 	wp.busy(busy);
 
 	TestGene tg("TestGene");
@@ -38,7 +41,7 @@ int sc_main(int argc, char *argv[])
 	sc_trace(tf, wp.waveletR.d_int, "r_d");
 
 	cout << "Sim start" << endl;
-	sc_start(540 * 512 * 200, SC_NS);
+	sc_start(540 * 512 * 200 * 2, SC_NS);
 	sc_close_vcd_trace_file(tf);
 	cout << "Sim end" << endl;
 

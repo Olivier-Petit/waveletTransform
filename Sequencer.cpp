@@ -26,6 +26,7 @@ void Sequencer::update_state()
 	else if(globalState.read() == SEQ_STATE_READY && start.read() == true)
 	{
 		globalState.write(SEQ_STATE_HORIZONTAL_TRANSFORM);
+		remainingRuns.write(iterations.read() - 1);
 		currentRow.write(0);
 		currentCol.write(-2);
 		nbCols = sizeX.read();
@@ -64,7 +65,17 @@ void Sequencer::update_state()
 			// Image over
 			if(currentCol.read() == nbCols - 1)
 			{
-				globalState.write(SEQ_STATE_READY);
+				if(remainingRuns.read() <= 0)
+				{
+					globalState.write(SEQ_STATE_READY);
+				}
+				else
+				{
+					globalState.write(SEQ_STATE_HORIZONTAL_TRANSFORM);
+					remainingRuns.write(remainingRuns.read() - 1);
+					currentRow.write(0);
+					currentCol.write(-2);
+				}
 			}
 		}
 	}

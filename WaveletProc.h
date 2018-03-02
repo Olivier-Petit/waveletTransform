@@ -14,6 +14,7 @@ public:
 	sc_in<bool> reset;
 
 	sc_in<bool> start;
+	sc_in<int> iterations;
 	sc_out<bool> busy;
 
 	WaveletProc(sc_module_name name);

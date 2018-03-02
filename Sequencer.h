@@ -11,6 +11,7 @@ public:
 
 	// Sequencer control signals
 	sc_in<bool> start;
+	sc_in<int> iterations;
 	sc_out<bool> busy;
 
 	// Input image size
@@ -37,6 +38,7 @@ private:
 	sc_signal<int> globalState;
 	sc_signal<int> currentRow;
 	sc_signal<int> currentCol;
+	sc_signal<int> remainingRuns;
 
 	int nbRows;
 	int nbCols;

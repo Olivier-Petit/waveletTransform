@@ -12,6 +12,7 @@ WaveletProc::WaveletProc(sc_module_name name):
 	sequencer.clk(clk);
 	sequencer.reset(reset);
 	sequencer.start(start);
+	sequencer.iterations(iterations);
 	sequencer.busy(busy);
 	sequencer.mem_in_addr(mem_in_addr);
 	sequencer.mem_out_addr(mem_out_addr);
