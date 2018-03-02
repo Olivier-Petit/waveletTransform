@@ -129,7 +129,7 @@ void Sequencer::compute_outputs()
 				if(globalState.read() == SEQ_STATE_HORIZONTAL_TRANSFORM)
 				{
 					mem_out_addr.write(
-						nbCols * nbRows // Output memory is second third of memory
+						nbCols * nbRows // Intermediate output memory is second half of memory
 						+ nbCols * currentRow.read() // Position on right row
 						+ nbCols / 2 // Offset by half the image
 						+ (currentCol.read() - 6) / 2 // Column position
@@ -138,8 +138,7 @@ void Sequencer::compute_outputs()
 				else // SEQ_STATE_VERTICAL_TRANSFORM
 				{
 					mem_out_addr.write(
-						2 * nbCols * nbRows // Output memory is last third of memory
-						+ currentCol.read() // Postion on right column
+						currentCol.read() // Postion on right column
 						+ (currentRow.read() - 6) * nbCols / 2 // Row position
 					);	
 				}
@@ -158,7 +157,7 @@ void Sequencer::compute_outputs()
 				if(globalState.read() == SEQ_STATE_HORIZONTAL_TRANSFORM)
 				{
 					mem_out_addr.write(
-						nbCols * nbRows // Output memory is second half of memory
+						nbCols * nbRows // Intermediate output memory is second half of memory
 						+ nbCols * currentRow.read()  // Position on right row
 						+ (currentCol.read() - 7) / 2 // Column position
 					);
@@ -166,8 +165,7 @@ void Sequencer::compute_outputs()
 				else // SEQ_STATE_VERTICAL_TRANSFORM
 				{
 					mem_out_addr.write(
-						2 * nbCols * nbRows // Output memory is last third of memory
-						+ currentCol.read() // Position on right column
+						currentCol.read() // Position on right column
 						+ nbCols * nbRows / 2 // Offset by half the image (BMP starts at bottom line)
 						+ (currentRow.read() - 7) * nbCols / 2 // Row position
 					);
