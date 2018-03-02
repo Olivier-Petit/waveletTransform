@@ -4,8 +4,8 @@
 #define SEQ_STATE_HORIZONTAL_TRANSFORM 1
 #define SEQ_STATE_VERTICAL_TRANSFORM 2
 
-Sequencer::Sequencer(sc_module_name name, int nbRows, int nbCols) : 
-	sc_module(name), nbRows(nbRows), nbCols(nbCols)
+Sequencer::Sequencer(sc_module_name name) : 
+	sc_module(name), nbRows(0), nbCols(0)
 {	
 	// Sequencer logic is falling edge triggered
 	SC_METHOD(update_state);
@@ -28,6 +28,8 @@ void Sequencer::update_state()
 		globalState.write(SEQ_STATE_HORIZONTAL_TRANSFORM);
 		currentRow.write(0);
 		currentCol.write(-2);
+		nbCols = sizeX.read();
+		nbRows = sizeY.read();
 	}
 	// Computing
 	else if(globalState.read() == SEQ_STATE_HORIZONTAL_TRANSFORM)

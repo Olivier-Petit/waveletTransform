@@ -24,6 +24,8 @@ public:
 	Wavelet waveletG;
 	Wavelet waveletB;
 
+	sc_signal<int> sizeX, sizeY;
+
 	sc_signal<int> mem_in_addr;
 	sc_signal<int> mem_out_addr;
 	sc_signal<bool> mem_out_write;

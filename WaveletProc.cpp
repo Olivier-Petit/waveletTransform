@@ -2,7 +2,7 @@
 
 WaveletProc::WaveletProc(sc_module_name name):
 	sc_module(name),
-	sequencer("Sequencer", 512, 512),
+	sequencer("Sequencer"),
 	memory("Memory"),
 	waveletR("WaveletR"),
 	waveletG("WaveletG"),
@@ -18,6 +18,8 @@ WaveletProc::WaveletProc(sc_module_name name):
 	sequencer.mem_out_write(mem_out_write);
 	sequencer.even(even);
 	sequencer.first_c(first_c);
+	sequencer.sizeX(sizeX);
+	sequencer.sizeY(sizeY);
 
 	// Memory
 	memory.clk(clk);
@@ -32,6 +34,8 @@ WaveletProc::WaveletProc(sc_module_name name):
 	memory.data_bo(data_bo);
 	memory.data_vo(data_go);
 	memory.data_ro(data_ro);
+	memory.sizeX(sizeX);
+	memory.sizeY(sizeY);
 
 	// Wavelet
 	waveletR.clk(clk);

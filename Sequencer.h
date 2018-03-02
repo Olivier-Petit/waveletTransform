@@ -13,6 +13,10 @@ public:
 	sc_in<bool> start;
 	sc_out<bool> busy;
 
+	// Input image size
+	sc_in<int> sizeX;
+	sc_in<int> sizeY;
+
 	// Memory control signals
 	sc_out<int> mem_in_addr;
 	sc_out<int> mem_out_addr;
@@ -22,7 +26,7 @@ public:
 	sc_out<bool> even;
 	sc_out<bool> first_c;
 
-	Sequencer(sc_module_name name, int nbRows, int nbCols);
+	Sequencer(sc_module_name name);
 
 	void update_state();
 	void compute_outputs();

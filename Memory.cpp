@@ -191,11 +191,13 @@ void Memory::pict_load() {
    if ((infimg[5] & 3) != 0) infimg[5] = (infimg[5]&0xFFFFFFFC)+4 ;
    cout << "largeur : " << infimg[5] << "\n";
    ncol = infimg[5] ;
+   sizeX.write(ncol);
    
    // hauteur
    infimg[6] =  getlong(file);
    cout << "hauteur : " << infimg[6] << "\n";
    nlig = infimg[6];
+   sizeY.write(nlig);
    
    nbpix = infimg[5]*infimg[6];
    cout << "nombre de pixels : " << nbpix << "\n";

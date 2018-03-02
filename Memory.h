@@ -19,6 +19,9 @@ public:
    sc_in<unsigned char> data_bi, data_vi, data_ri;
    sc_out<unsigned char> data_bo, data_vo, data_ro;
    
+   sc_out<int> sizeX;
+   sc_out<int> sizeY;
+
    void pict_load();
    void pict_save();
    void mem_read();
