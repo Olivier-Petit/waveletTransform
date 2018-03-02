@@ -117,9 +117,9 @@ void Memory::pict_save() {
          putlong(file2,infimg[14]);   // nb couleurs importantes
          
          for (int i=0;i<nbpix;i++) { // ecriture contenu pixels
-            fputc(imgb[i+2*nbpix],file2);
-            fputc(imgv[i+2*nbpix],file2);
-            fputc(imgr[i+2*nbpix],file2);
+            fputc(imgb[i],file2);
+            fputc(imgv[i],file2);
+            fputc(imgr[i],file2);
          }
          
          fclose(file2);
@@ -265,9 +265,9 @@ void Memory::pict_load() {
    if (imgb!=NULL)  delete [] imgb;
    if (imgv!=NULL)  delete [] imgv;
    if (imgr!=NULL)  delete [] imgr;
-   imgb = new unsigned char [3*nbpix];
-   imgv = new unsigned char [3*nbpix];
-   imgr = new unsigned char [3*nbpix];
+   imgb = new unsigned char [2*nbpix];
+   imgv = new unsigned char [2*nbpix];
+   imgr = new unsigned char [2*nbpix];
    
    // remplissage des tableaux image
    while (!feof(file) && (lng<nbpix)) {  // boucle sur chaque pixel
