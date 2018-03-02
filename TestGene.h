@@ -1,3 +1,11 @@
+/*
+ * TestGene.h
+ * Olivier Petit
+ * CentraleSupelec
+ * Hardware implementation of signal processing algorithms courses
+ * March 2018
+ */
+
 #ifndef TEST_GENE_H
 #define TEST_GENE_H
 

@@ -1,3 +1,11 @@
+/*
+ * Sequencer.h
+ * Olivier Petit
+ * CentraleSupelec
+ * Hardware implementation of signal processing algorithms courses
+ * March 2018
+ */
+
 #ifndef SEQUENCER_H_
 #define SEQUENCER_H_
 

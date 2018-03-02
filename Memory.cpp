@@ -1,5 +1,12 @@
-#include "Memory.h"
+/*
+ * Memory.cpp
+ * Morgan Roger & Olivier Petit
+ * CentraleSupelec
+ * Hardware implementation of signal processing algorithms courses
+ * March 2018
+ */
 
+#include "Memory.h"
 
 /* Constructeur du module
  */

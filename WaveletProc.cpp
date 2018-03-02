@@ -1,3 +1,11 @@
+/*
+ * WaveletProc.cpp
+ * Olivier Petit
+ * CentraleSupelec
+ * Hardware implementation of signal processing algorithms courses
+ * March 2018
+ */
+
 #include "WaveletProc.h"
 
 WaveletProc::WaveletProc(sc_module_name name):

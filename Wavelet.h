@@ -1,3 +1,11 @@
+/*
+ * Wavelet.h
+ * Olivier Petit
+ * CentraleSupelec
+ * Hardware implementation of signal processing algorithms courses
+ * March 2018
+ */
+
 #ifndef WAVELET_H_
 #define WAVELET_H_
 

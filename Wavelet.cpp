@@ -1,3 +1,12 @@
+/*
+ * Wavelt.cpp
+ * Olivier Petit
+ * CentraleSupelec
+ * Hardware implementation of signal processing algorithms courses
+ * March 2018
+ */
+
+
 #include "Wavelet.h"
 
 Wavelet::Wavelet(sc_module_name name):sc_module(name)

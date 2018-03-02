@@ -1,3 +1,11 @@
+/*
+ * sc_main.cpp
+ * Olivier Petit
+ * CentraleSupelec
+ * Hardware implementation of signal processing algorithms courses
+ * March 2018
+ */
+
 #include <systemc.h>
 #include <stdio.h>
 
