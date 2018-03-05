@@ -26,8 +26,8 @@ Memory::Memory(sc_module_name name) : sc_module(name)
     SC_METHOD(pict_save);  
         sensitive << img_valid.neg();
         dont_initialize();
-    SC_METHOD(mem_read); // Asynchronous memory reads
-        sensitive << admemr;
+    SC_METHOD(mem_read);
+        sensitive << clk.pos();
     SC_METHOD(mem_write);
         sensitive << clk.pos();
 }

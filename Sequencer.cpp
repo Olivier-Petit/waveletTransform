@@ -46,7 +46,7 @@ void Sequencer::update_state()
 		currentCol.write(currentCol.read() + 1);
 
 		// Row over, switch to next one
-		if(currentCol.read() == nbCols + 5)
+		if(currentCol.read() == nbCols + 6)
 		{
 			currentRow.write(currentRow.read() + 1);
 			currentCol.write(-2);
@@ -65,7 +65,7 @@ void Sequencer::update_state()
 		currentRow.write(currentRow.read() + 1);
 
 		// Column over, switch to next one
-		if(currentRow.read() == nbRows + 5)
+		if(currentRow.read() == nbRows + 6)
 		{
 			currentCol.write(currentCol.read() + 1);
 			currentRow.write(-2);
@@ -131,11 +131,14 @@ void Sequencer::compute_outputs()
 		mem_in_addr.write(addrIn);
 
 		// Even or odd pixel loading
-		bool evenPrimDim = actualPrimDim % 2 == 0;
+		// There is a delay of one clock cycle because of memory read
+		// That's why we consider having an even pixel being loaded in the transform
+		// block when the memory read adress is odds
+		bool evenPrimDim = actualPrimDim % 2 == 1;
 		even.write(evenPrimDim);
 
 		// Use C0 or Cj formula for C
-		if(primDim->read() == 6)
+		if(primDim->read() == 7)
 			first_c.write(true);
 		else
 			first_c.write(false);
@@ -144,8 +147,8 @@ void Sequencer::compute_outputs()
 		// Inputing even column or row, the transform blocks outputs D value
 		if(evenPrimDim)
 		{	
-			// The first D value is obtained when the even input pixel index is >= 6
-			if(primDim->read() >= 6)
+			// The first D value is obtained when the even input pixel index is >= 7
+			if(primDim->read() >= 7)
 			{
 				if(globalState.read() == SEQ_STATE_HORIZONTAL_TRANSFORM)
 				{
@@ -153,14 +156,14 @@ void Sequencer::compute_outputs()
 						nbCols * nbRows // Intermediate output memory is second half of memory
 						+ nbCols * currentRow.read() // Position on right row
 						+ nbCols / 2 // Offset by half the image
-						+ (currentCol.read() - 6) / 2 // Column position
+						+ (currentCol.read() - 7) / 2 // Column position
 					);
 				}
 				else // SEQ_STATE_VERTICAL_TRANSFORM
 				{
 					mem_out_addr.write(
 						currentCol.read() // Postion on right column
-						+ (currentRow.read() - 6) * nbCols / 2 // Row position
+						+ (currentRow.read() - 7) * nbCols / 2 // Row position
 					);	
 				}
 				mem_out_write.write(true);
@@ -173,14 +176,14 @@ void Sequencer::compute_outputs()
 		}
 		else // Inputing odd column or row, the transform block outputs C value
 		{
-			if(primDim->read() >= 7)
+			if(primDim->read() >= 8)
 			{
 				if(globalState.read() == SEQ_STATE_HORIZONTAL_TRANSFORM)
 				{
 					mem_out_addr.write(
 						nbCols * nbRows // Intermediate output memory is second half of memory
 						+ nbCols * currentRow.read()  // Position on right row
-						+ (currentCol.read() - 7) / 2 // Column position
+						+ (currentCol.read() - 8) / 2 // Column position
 					);
 				}
 				else // SEQ_STATE_VERTICAL_TRANSFORM
@@ -188,7 +191,7 @@ void Sequencer::compute_outputs()
 					mem_out_addr.write(
 						currentCol.read() // Position on right column
 						+ nbCols * nbRows / 2 // Offset by half the image (BMP starts at bottom line)
-						+ (currentRow.read() - 7) * nbCols / 2 // Row position
+						+ (currentRow.read() - 8) * nbCols / 2 // Row position
 					);
 				}
 
