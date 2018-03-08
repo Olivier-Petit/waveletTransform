@@ -138,7 +138,7 @@ void Sequencer::compute_outputs()
 		even.write(evenPrimDim);
 
 		// Use C0 or Cj formula for C
-		if(primDim->read() == 7)
+		if(primDim->read() <= 7)
 			first_c.write(true);
 		else
 			first_c.write(false);
