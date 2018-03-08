@@ -36,7 +36,7 @@ void Sequencer::update_state()
 		globalState.write(SEQ_STATE_HORIZONTAL_TRANSFORM);
 		remainingRuns.write(iterations.read() - 1);
 		currentRow.write(0);
-		currentCol.write(-2);
+		currentCol.write(-4);
 		nbCols = sizeX.read();
 		nbRows = sizeY.read();
 	}
@@ -49,13 +49,13 @@ void Sequencer::update_state()
 		if(currentCol.read() == nbCols + 6)
 		{
 			currentRow.write(currentRow.read() + 1);
-			currentCol.write(-2);
+			currentCol.write(-4);
 			
 			// Image over, go to vertical transform
 			if(currentRow.read() == nbRows - 1)
 			{
 				globalState.write(SEQ_STATE_VERTICAL_TRANSFORM);
-				currentRow.write(-2);
+				currentRow.write(-4);
 				currentCol.write(0);
 			}
 		}
@@ -68,7 +68,7 @@ void Sequencer::update_state()
 		if(currentRow.read() == nbRows + 6)
 		{
 			currentCol.write(currentCol.read() + 1);
-			currentRow.write(-2);
+			currentRow.write(-4);
 			
 			// Image over
 			if(currentCol.read() == nbCols - 1)
@@ -82,7 +82,7 @@ void Sequencer::update_state()
 					globalState.write(SEQ_STATE_HORIZONTAL_TRANSFORM);
 					remainingRuns.write(remainingRuns.read() - 1);
 					currentRow.write(0);
-					currentCol.write(-2);
+					currentCol.write(-4);
 				}
 			}
 		}
