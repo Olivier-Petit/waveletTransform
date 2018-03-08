@@ -19,8 +19,6 @@ public:
    
    // True if loading even pixel, false if loading odd pixel
    sc_in<bool> load_even;
-   // True when computing C_0
-   sc_in<bool> first_c;
    sc_in<unsigned char> data_in;
 
    // Data out, alternatively C_n and D_n

@@ -18,7 +18,7 @@ Wavelet::Wavelet(sc_module_name name):sc_module(name)
     	sensitive << evenm2 << even << evenp2 << evenp4 << odd << reset;
     
     SC_METHOD(compute_c)
-    	sensitive << even << dm1 << d_int << first_c << reset;
+    	sensitive << even << dm1 << d_int << reset;
 
     SC_METHOD(output_select);
     	sensitive << c_int << d_int << c_saved << load_even << reset;
@@ -95,11 +95,7 @@ void Wavelet::compute_c()
 	}
 	else
 	{
-		int newc = 0;
-		if(first_c.read() == true)
-			newc = even.read() + d_int.read() / 2 - 64;
-		else
-			newc = even.read() + (d_int.read() + dm1.read()) / 4 - 64;
+		int newc = even.read() + (d_int.read() + dm1.read()) / 4 - 64;
 
 		if(newc > 255)
 			c_int.write(255);
