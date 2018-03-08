@@ -97,7 +97,6 @@ void Sequencer::compute_outputs()
 		mem_in_addr.write(0);
 		mem_out_addr.write(0);
 		mem_out_write.write(false);
-		first_c.write(false);
 		even.write(true);
 	}
 	else // Computing
@@ -136,12 +135,6 @@ void Sequencer::compute_outputs()
 		// block when the memory read adress is odds
 		bool evenPrimDim = actualPrimDim % 2 == 1;
 		even.write(evenPrimDim);
-
-		// Use C0 or Cj formula for C
-		if(primDim->read() <= 7)
-			first_c.write(true);
-		else
-			first_c.write(false);
 
 		// Output address to access
 		// Inputing even column or row, the transform blocks outputs D value

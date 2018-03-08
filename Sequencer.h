@@ -33,7 +33,6 @@ public:
 
 	// Transform block control signals
 	sc_out<bool> even;
-	sc_out<bool> first_c;
 
 	Sequencer(sc_module_name name);
 

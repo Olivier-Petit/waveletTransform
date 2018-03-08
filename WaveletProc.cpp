@@ -25,11 +25,10 @@ WaveletProc::WaveletProc(sc_module_name name):
 	sequencer.mem_in_addr(mem_in_addr);
 	sequencer.mem_out_addr(mem_out_addr);
 	sequencer.mem_out_write(mem_out_write);
-	sequencer.even(even);
-	sequencer.first_c(first_c);
 	sequencer.sizeX(sizeX);
 	sequencer.sizeY(sizeY);
-
+	sequencer.even(even);
+	
 	// Memory
 	memory.clk(clk);
 	memory.reset(reset);
@@ -50,21 +49,18 @@ WaveletProc::WaveletProc(sc_module_name name):
 	waveletR.clk(clk);
 	waveletR.reset(reset);
 	waveletR.load_even(even);
-	waveletR.first_c(first_c);
 	waveletR.data_in(data_ro);
 	waveletR.data_out(data_ri);
 
 	waveletG.clk(clk);
 	waveletG.reset(reset);
 	waveletG.load_even(even);
-	waveletG.first_c(first_c);
 	waveletG.data_in(data_go);
 	waveletG.data_out(data_gi);
 
 	waveletB.clk(clk);
 	waveletB.reset(reset);
 	waveletB.load_even(even);
-	waveletB.first_c(first_c);
 	waveletB.data_in(data_bo);
 	waveletB.data_out(data_bi);
 }

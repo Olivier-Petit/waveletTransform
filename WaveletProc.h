@@ -39,7 +39,6 @@ public:
 	sc_signal<int> mem_out_addr;
 	sc_signal<bool> mem_out_write;
 	sc_signal<bool> even;
-	sc_signal<bool> first_c;
 
 	sc_signal<unsigned char> data_bi, data_gi, data_ri;
    	sc_signal<unsigned char> data_bo, data_go, data_ro;
