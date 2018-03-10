@@ -137,10 +137,10 @@ void Sequencer::compute_outputs()
 		even.write(evenPrimDim);
 
 		// Output address to access
-		// Inputing even column or row, the transform blocks outputs D value
+		// Inputing even column or row, the transform blocks outputs C value
 		if(evenPrimDim)
 		{	
-			// The first D value is obtained when the even input pixel index is >= 7
+			// The first C value is obtained when the even input pixel index is >= 7
 			if(primDim->read() >= 7)
 			{
 				if(globalState.read() == SEQ_STATE_HORIZONTAL_TRANSFORM)
@@ -148,7 +148,6 @@ void Sequencer::compute_outputs()
 					mem_out_addr.write(
 						nbCols * nbRows // Intermediate output memory is second half of memory
 						+ nbCols * currentRow.read() // Position on right row
-						+ nbCols / 2 // Offset by half the image
 						+ (currentCol.read() - 7) / 2 // Column position
 					);
 				}
@@ -156,6 +155,7 @@ void Sequencer::compute_outputs()
 				{
 					mem_out_addr.write(
 						currentCol.read() // Postion on right column
+						+ nbCols * nbRows / 2 // Offset by half the image (BMP starts at bottom line)
 						+ (currentRow.read() - 7) * nbCols / 2 // Row position
 					);	
 				}
@@ -167,7 +167,7 @@ void Sequencer::compute_outputs()
 				mem_out_write.write(false);
 			}
 		}
-		else // Inputing odd column or row, the transform block outputs C value
+		else // Inputing odd column or row, the transform block outputs D value
 		{
 			if(primDim->read() >= 8)
 			{
@@ -176,6 +176,7 @@ void Sequencer::compute_outputs()
 					mem_out_addr.write(
 						nbCols * nbRows // Intermediate output memory is second half of memory
 						+ nbCols * currentRow.read()  // Position on right row
+						+ nbCols / 2 // Offset by half the image
 						+ (currentCol.read() - 8) / 2 // Column position
 					);
 				}
@@ -183,7 +184,6 @@ void Sequencer::compute_outputs()
 				{
 					mem_out_addr.write(
 						currentCol.read() // Position on right column
-						+ nbCols * nbRows / 2 // Offset by half the image (BMP starts at bottom line)
 						+ (currentRow.read() - 8) * nbCols / 2 // Row position
 					);
 				}
