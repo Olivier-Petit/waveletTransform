@@ -35,6 +35,7 @@ public:
 
    SC_HAS_PROCESS(Wavelet);
 
+   // Inputs buffers + delays
    sc_signal<unsigned char> evenp4, evenp2, even, evenm2;
    sc_signal<unsigned char> oddp4, oddp2, odd;
    sc_signal<unsigned char> dm1;
@@ -44,10 +45,5 @@ public:
    // following odd pixel
    sc_signal<unsigned char> c_int;
    sc_signal<unsigned char> d_int;
-
-   // Saves the last correct C value, so we can output it in between
-   // even pixel loading and odd pixel loading
-   sc_signal<unsigned char>  c_saved;
-
 };
 #endif

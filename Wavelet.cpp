@@ -21,7 +21,7 @@ Wavelet::Wavelet(sc_module_name name):sc_module(name)
     	sensitive << even << dm1 << d_int << reset;
 
     SC_METHOD(output_select);
-    	sensitive << c_int << d_int << c_saved << load_even << reset;
+    	sensitive << c_int << d_int << dm1 << load_even << reset;
 }
 
 void Wavelet::delay()
@@ -51,9 +51,6 @@ void Wavelet::delay()
 		even.write(evenp2.read());
 		evenp2.write(evenp4.read());
 		evenp4.write(data_in.read());
-
-		// Save valid c value, so we can output it later
-		c_saved.write(c_int.read());
 	}
 	// Load new odd pixel
 	else if(load_even.read() == false)
@@ -115,8 +112,8 @@ void Wavelet::output_select()
 	else
 	{
 		if(load_even.read() == true)
-			data_out.write(d_int.read());
+			data_out.write(c_int.read());
 		else
-			data_out.write(c_saved.read());
+			data_out.write(dm1.read());
 	}
 }
