@@ -23,6 +23,7 @@ Memory::Memory(sc_module_name name) : sc_module(name)
 //-------------------------------------LISTES DE SENSIBILITE A PERSONNALISER 
     SC_METHOD(pict_load);
         sensitive << reset.pos();
+        dont_initialize();
     SC_METHOD(pict_save);  
         sensitive << img_valid.neg();
         dont_initialize();
