@@ -20,7 +20,7 @@ Sequencer::Sequencer(sc_module_name name) :
 		sensitive << clk.neg() << reset;
 
 	SC_METHOD(compute_outputs);
-		sensitive << globalState << currentRow << currentCol;
+		sensitive << globalState << remainingRuns << currentRow << currentCol;
 }
 
 void Sequencer::update_state()
